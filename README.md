@@ -11,9 +11,9 @@ Azure Blob Storage is a Microsoft Azure cloud-based object storage solution. It 
 -	Python: The Azure SDK for Python enables Python developers to integrate Blob Storage functionality into their applications.
 -	Java, Go, and more: Azure Blob Storage provides SDKs for multiple programming languages, enabling broad language support.
 ## Pre-requisites
-•	Azure subscription, if you’re a student redeem Azure for students else create a free account
-•	Nodejs installed on your machine.
-•	VS Code
+1.	Azure subscription, if you’re a student redeem Azure for students else create a free account
+2.	Nodejs installed on your machine.
+3.	VS Code
 ## Procedure
 1.	Provision Azure blob storage
 2.	Clone this repo.
