@@ -18,7 +18,6 @@ const App = () => {
   const blobServiceClient = new BlobServiceClient(`https://${account}.blob.core.windows.net/?${sasToken}`);  // create a blobServiceClient
   const containerClient = blobServiceClient.getContainerClient(containerName);  // create a containerClient
 
-
   //fetch all images
   const fetchImages = async () => {
     if (!account || !sasToken || !containerName) {  // check if the credentials are set
@@ -80,12 +79,6 @@ const App = () => {
     } finally {
       setLoading(false);  //
     }
-  }
-
-  // Helper function to get the image name without extension
-  const getImageNameWithoutExtension = (filename) => {
-    const dotIndex = filename.lastIndexOf('.');
-    return dotIndex !== -1 ? filename.slice(0, dotIndex) : filename;
   };
 
   // fetch all images when the page loads
@@ -93,44 +86,44 @@ const App = () => {
     fetchImages();
   }, [])
 
+  // Helper function to get the image name without extension
+  const getImageNameWithoutExtension = (filename) => {
+    const dotIndex = filename.lastIndexOf('.');
+    return dotIndex !== -1 ? filename.slice(0, dotIndex) : filename;
+  };
   return (
-    <>
-      <div className="container">
-        {loading && <Loading />}
-        <h2>📸 Image Gallery Azure Blob Storage 📸</h2><hr />
-        <div className="row-form">
-          <form className='upload-form'>
-            <div className='upload-form_display'>
-              {
-                file ? <img className="displayImg" src={URL.createObjectURL(file)} alt="no pic" />
-                  : <img className="displayImg" src={Placeholder} alt="nopic" />
-              }
-            </div>
-            <div className='upload-form_inputs'>
-              <label htmlFor="fileInput"><FaFileUpload /></label>
-              <input type="file" style={{ display: "none" }} id="fileInput" onChange={(e) => setFile(e.target.files[0])} />
-              <button type="submit" onClick={handleSubmit} >Upload</button>
-            </div>
-          </form>
-        </div>
-        <div className="row-display">
-          {
-            imageUrls.length === 0 ? <h3>😐 No Images Found😐 </h3> : (
-              imageUrls && imageUrls.map((blobItem, index) => {
-                return (
-                  <div key={index} className="card">
-                    <img src={blobItem.url} alt="no pic" />
-                    <h3 style={{ width: "90%" }}>{getImageNameWithoutExtension(blobItem.name)}</h3>
-                    <button className="del" onClick={() => handleDelete(blobItem.name)} > <AiFillDelete /> </button>
-                  </div>
-                )
-              })
-            )
-          }
-
-        </div>
+    <div className="container">
+      {loading && <Loading />}
+      <h2>📸 Image Gallery Azure Blob Storage 📸</h2><hr />
+      <div className="row-form">
+        <form className='upload-form'>
+          <div className='upload-form_display'>
+            {
+              file ? <img className="displayImg" src={URL.createObjectURL(file)} alt="no pic" />
+                : <img className="displayImg" src={Placeholder} alt="nopic" />
+            }
+          </div>
+          <div className='upload-form_inputs'>
+            <label htmlFor="fileInput"><FaFileUpload /></label>
+            <input type="file" style={{ display: "none" }} id="fileInput" onChange={(e) => setFile(e.target.files[0])} />
+            <button type="submit" onClick={handleSubmit} >Upload</button>
+          </div>
+        </form>
       </div>
-    </>
+      <div className="row-display">
+        {imageUrls.length === 0 ? <h3>😐 No Images Found😐 </h3> : (
+          imageUrls && imageUrls.map((blobItem, index) => {
+            return (
+              <div key={index} className="card">
+                <img src={blobItem.url} alt="no pic" />
+                <h3 style={{ width: "90%" }}>{getImageNameWithoutExtension(blobItem.name)}</h3>
+                <button className="del" onClick={() => handleDelete(blobItem.name)} > <AiFillDelete /> </button>
+              </div>
+            )
+          })
+        )}
+      </div>
+    </div>
   )
 }
 
